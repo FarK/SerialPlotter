@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 CONFIG -= moc
-INCLUDEPATH += /usr/include/qwt
+INCLUDEPATH += /usr/include/qwt /usr/include/qwt5
 LIBS += -lqwt
 
 # Input
