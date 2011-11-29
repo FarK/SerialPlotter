@@ -10,5 +10,5 @@ INCLUDEPATH += /usr/include/qwt
 LIBS += -lqwt
 
 # Input
-HEADERS += 
-SOURCES += main.cpp 
+HEADERS += plotter.h
+SOURCES += main.cpp plotter.cpp
