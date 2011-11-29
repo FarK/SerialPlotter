@@ -20,15 +20,15 @@ class MyPlot : public QWidget
 	QVector<double> x, y;
 	int t0, time, zoom;
 
-	QwtPlot plot;
-	QwtPlotCurve curve;
+	QwtPlot* plot;
+	QwtPlotCurve* curve;
 
-	QScrollBar scroll;
-	QSlider slider;
-	QLineEdit sliderText;
-	QHBoxLayout layoutH;
-	QWidget layoutVWidget;
-	QVBoxLayout layoutV;
+	QScrollBar* scroll;
+	QSlider* slider;
+	QLineEdit* sliderText;
+	QHBoxLayout* layoutH;
+	QWidget* layoutVWidget;
+	QVBoxLayout* layoutV;
 	int idTimmer;
 
 	public:
