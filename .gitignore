@@ -1,0 +1,6 @@
+tags
+QWT
+*.o
+.*.swp
+moc_*.cpp
+moc_*.c
