@@ -10,5 +10,5 @@ INCLUDEPATH += /usr/include/qwt /usr/include/qwt5
 LIBS += -lqwt
 
 # Input
-HEADERS += plotter.h
-SOURCES += main.cpp plotter.cpp
+HEADERS += plotter.h multiPlotter.h serialLib/serialLinux.h
+SOURCES += main.cpp plotter.cpp multiPlotter.cpp serialLib/serialLinux.cpp
