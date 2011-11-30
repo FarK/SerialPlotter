@@ -10,7 +10,7 @@
 #include <cmath>
 #include <cstdio>
 
-MyPlot::MyPlot(QWidget *parent) : QWidget(parent),
+Plotter::Plotter(QWidget *parent) : QWidget(parent),
 				  t0(0), time(0), zoom(0)
 {
 	//Inicializamos
@@ -63,7 +63,7 @@ MyPlot::MyPlot(QWidget *parent) : QWidget(parent),
 	plot->replot();
 }
 
-void MyPlot::timerEvent(QTimerEvent *event){
+void Plotter::timerEvent(QTimerEvent *event){
 	int timeWindow = (int)(time/100.0*zoom+0.5);
 	x.insert(time,time);
 	y.insert(time,sin((double)time/6.2832));
@@ -81,11 +81,11 @@ void MyPlot::timerEvent(QTimerEvent *event){
 	++time;
 }
 
-void MyPlot::setT0(int t){
+void Plotter::setT0(int t){
 	t0 = t;
 }
 
-void MyPlot::setZoom(int z){
+void Plotter::setZoom(int z){
 	zoom = z;
 	sliderText->setText(QString::number(zoom));
 	
@@ -97,7 +97,7 @@ void MyPlot::setZoom(int z){
 	}
 }
 
-void MyPlot::setZoom(){
+void Plotter::setZoom(){
 	zoom = sliderText->text().toInt();
 	slider->setSliderPosition(zoom);
 }

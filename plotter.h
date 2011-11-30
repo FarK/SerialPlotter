@@ -12,7 +12,7 @@
 #include <qwt_plot_curve.h>
 #include <qwt_plot.h>
 
-class MyPlot : public QWidget
+class Plotter : public QWidget
 {
 	Q_OBJECT
 
@@ -32,7 +32,7 @@ class MyPlot : public QWidget
 	int idTimmer;
 
 	public:
-	MyPlot(QWidget *parent = NULL);
+	Plotter(QWidget *parent = NULL);
 	void timerEvent(QTimerEvent *event);
 
 	public slots:

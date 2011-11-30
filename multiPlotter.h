@@ -3,13 +3,22 @@
 
 #include <QWidget>
 #include <QVarLengthArray>
+#include "plotter.h"
+#include "serialLib/serialLinux.h"
 
-class MultiPlotter : QWidget{
+class MultiPlotter : public QWidget{
+	Q_OBJECT
+
 	private:
-		QVarLengthArray<Plotter,5> plotterArray;
+		char* port;
+		QVarLengthArray<Plotter*,5> plotters;
+		Serial serialManager;
 
 	public:
 		MultiPlotter(int numPlotters);
+
+	public slots:
+		void newData(char* data, long size);
 };
 
 #endif

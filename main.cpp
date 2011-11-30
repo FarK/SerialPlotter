@@ -2,13 +2,18 @@
 #include <QWidget>
 #include <QBoxLayout>
 #include "plotter.h"
+#include "multiPlotter.h"
 
 int main( int argc, char *argv[] )
 {
 	QApplication app(argc, argv);
-	MyPlot myPlot;
+	//Plotter myPlot;
 
-	myPlot.show();
+	//myPlot.show();
+	
+	MultiPlotter mp(1);
+
+	//mp.show();
 
 	return app.exec();
 }
