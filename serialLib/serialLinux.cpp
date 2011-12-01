@@ -19,7 +19,7 @@ void Serial::run(){
 		if(configurePort() != ERROR_PORT_CONF)
 			while(1){
 				emit(newData(buff,readPort()));
-				//printf("envidad señal: %s\n",buff);
+				//printf("emitida señal\n");
 			}
 		else
 			printf("no configura\n");
@@ -76,9 +76,11 @@ int Serial::configurePort(){
 	// ICRNL   : mapea CR a NL (en otro caso una entrada CR del otro ordenador
 	// no terminaría la entrada) en otro caso hace un dispositivo en bruto
 	// (sin otro proceso de entrada).
-	newtio.c_iflag = 0;
 	//newtio.c_iflag = IGNPAR;
 	//newtio.c_iflag |= ICRNL;
+
+	//Entrada en bruto
+	newtio.c_iflag = 0;
 
 	//Salida en bruto.
 	newtio.c_oflag = 0;
@@ -103,6 +105,17 @@ int Serial::configurePort(){
 	}
 }
 
+long Serial::readPort(){
+	int bytes;
+
+	do{
+		ioctl(fd, FIONREAD, &bytes);
+	}while(bytes<BUFF_SIZE);
+
+	return read(fd,buff,BUFF_SIZE);
+}
+
+/*
 long Serial::readPort(){
 	Tconf newtio;
 	struct timeval inic,fin,temp;
@@ -146,6 +159,7 @@ long Serial::readPort(){
 		}
 	}
 }
+*/
 
 long Serial::writePort(char data[], int dataSize){
 	return  write(fd, data, dataSize);

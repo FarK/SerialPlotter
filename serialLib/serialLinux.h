@@ -16,10 +16,12 @@
 #define XONXOFF   2
 #define SOFT      2
 
+#define TIMEOUT 100
+
 #define ERROR_PORT_CONF -1
 #define ERROR_OPEN_PORT -2
 #define ERROR_CLOSE_PORT -3
-#define BUFF_SIZE 256
+#define BUFF_SIZE 16
 
 
 typedef enum { P_8N1, P_8E1, P_7E1, P_701, P_7S1} Parity;
