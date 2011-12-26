@@ -7,8 +7,12 @@ TARGET =
 DEPENDPATH += .
 CONFIG -= moc
 INCLUDEPATH += /usr/include/qwt /usr/include/qwt5
-LIBS += -lqwt
+LIBS += -lqwt \
+	-L/usr/lib64 \
+	-lboost_system \
+	-lboost_thread \
+	-lboost_date_time
 
 # Input
-HEADERS += plotter.h multiPlotter.h serialLib/serialLinux.h
-SOURCES += main.cpp plotter.cpp multiPlotter.cpp serialLib/serialLinux.cpp
+HEADERS += plotter.h serial.h
+SOURCES += main.cpp plotter.cpp serial.cpp
