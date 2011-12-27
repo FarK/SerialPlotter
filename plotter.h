@@ -17,28 +17,28 @@ class Plotter : public QWidget
 	Q_OBJECT
 
 	private:
-	QVector<double> x, y;
-	int t0, time, zoom;
+		QVector<double> x, y;
+		int t0, time, zoom;
 
-	QwtPlot* plot;
-	QwtPlotCurve* curve;
+		QwtPlot* plot;
+		QwtPlotCurve* curve;
 
-	QScrollBar* scroll;
-	QSlider* slider;
-	QLineEdit* sliderText;
-	QHBoxLayout* layoutH;
-	QWidget* layoutVWidget;
-	QVBoxLayout* layoutV;
-	int idTimmer;
+		QScrollBar* scroll;
+		QSlider* slider;
+		QLineEdit* sliderText;
+		QHBoxLayout* layoutH;
+		QWidget* layoutVWidget;
+		QVBoxLayout* layoutV;
+		int idTimmer;
 
 	public:
-	Plotter(QWidget *parent = NULL);
-	void timerEvent(QTimerEvent *event);
+		Plotter(QWidget *parent = NULL);
+		void timerEvent(QTimerEvent *event);
 
 	public slots:
-	void setT0(int t0);
-	void setZoom(int zoom);
-	void setZoom();
+		void setT0(int t0);
+		void setZoom(int zoom);
+		void setZoom();
 };
 
 #endif

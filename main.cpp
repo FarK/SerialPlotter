@@ -13,7 +13,7 @@ int main( int argc, char *argv[] )
 	
 	MultiPlotter mp(1);
 
-	//mp.show();
+	mp.show();
 
 	return app.exec();
 }
