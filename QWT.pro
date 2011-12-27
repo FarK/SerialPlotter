@@ -14,5 +14,5 @@ LIBS += -lqwt \
 	-lboost_date_time
 
 # Input
-HEADERS += plotter.h serial.h
-SOURCES += main.cpp plotter.cpp serial.cpp
+HEADERS += plotter.h multiPlotter.h serial.h
+SOURCES += main.cpp plotter.cpp multiPlotter.cpp serial.cpp
