@@ -1,5 +1,6 @@
 #include "serial.h"
 #include <boost/asio.hpp>
+#include <QObject>
 
 using namespace boost::asio;
 
@@ -17,7 +18,7 @@ Serial::Serial(const std::string& portname, unsigned int baudRate) :
 	stMach.pFrame = frame.buff;
 }
 
-void Serial::start(){
+void Serial::run(){
 	while(1){
 		stMach.buffCounter = read(port, buffer(readBuff, 2*sizeof(Frame)+1));
 		stMach.pBuffer = readBuff;
@@ -71,6 +72,7 @@ void Serial::start(){
 							//Comprobamos si se ha terminado de recibir la trama
 							if(!--stMach.frameCounter){
 								trataLaTrama(&frame);
+								emit newFrame(frame);
 								printf("Trama Tratada\n");
 
 								stMach.pFrame = frame.buff;
@@ -95,7 +97,7 @@ void Serial::trataLaTrama(Frame* t){
 }
 
 void Serial::frameToHex(Frame* t){
-	for(int i = 0 ; i < sizeof(frame) ; ++i){
+	for(int i = 0 ; i < sizeof(Frame) ; ++i){
 		if(i%4 == 0 && i != 0)	printf("  ");
 		printf("[");
 		printf("%X",t->buff[i]);
