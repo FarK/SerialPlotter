@@ -1,18 +1,24 @@
 #include "multiPlotter.h"
 #include <QVarLengthArray>
+#include <QHBoxLayout>
 #include <cstdio>
 #include "serial.h"
 
-MultiPlotter::MultiPlotter(int numPlot) :
-	plotters(numPlot),
+MultiPlotter::MultiPlotter(QWidget *parent) :
+	QWidget(parent),
+	rollPlot(this),
+	pitchPlot(this),
+	yawPlot(this),
 	serial("/dev/ttyUSB0", 9600)
 {
+	//Layout
+	layoutH = new QHBoxLayout(this);
+	layoutH->addWidget(&rollPlot);
+	layoutH->addWidget(&pitchPlot);
+	layoutH->addWidget(&yawPlot);
+	
+	qRegisterMetaType<Frame>("Frame");
 	connect(&serial, SIGNAL(newFrame(Frame)), this, SLOT(newFrame(Frame)));
-
-	//Creamos las gráficas
-	for(int i = 0 ; i < numPlot ; ++i){
-		plotters.append(new Plotter(this));
-	}
 
 	serial.start();
 }
@@ -23,5 +29,8 @@ MultiPlotter::~MultiPlotter(){
 }
 
 void MultiPlotter::newFrame(Frame frame){
-	trataLaTrama(&frame);
+	//trataLaTrama(&frame);
+	rollPlot.newData(frame.time, frame.roll);
+	pitchPlot.newData(frame.time, frame.pitch);
+	yawPlot.newData(frame.time, frame.yaw);
 }

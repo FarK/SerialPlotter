@@ -71,9 +71,7 @@ void Serial::run(){
 
 							//Comprobamos si se ha terminado de recibir la trama
 							if(!--stMach.frameCounter){
-								trataLaTrama(&frame);
 								emit newFrame(frame);
-								printf("Trama Tratada\n");
 
 								stMach.pFrame = frame.buff;
 								stMach.frameCounter = sizeof(Frame);

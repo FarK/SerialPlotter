@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <qwt_plot_curve.h>
 #include <qwt_plot.h>
+#include "serial.h"
 
 class Plotter : public QWidget
 {
@@ -18,7 +19,7 @@ class Plotter : public QWidget
 
 	private:
 		QVector<double> x, y;
-		int t0, time, zoom;
+		int t0, dataCount, zoom;
 
 		QwtPlot* plot;
 		QwtPlotCurve* curve;
@@ -33,7 +34,8 @@ class Plotter : public QWidget
 
 	public:
 		Plotter(QWidget *parent = NULL);
-		void timerEvent(QTimerEvent *event);
+		void newData(int time, float data);
+		//void timerEvent(QTimerEvent *event);
 
 	public slots:
 		void setT0(int t0);

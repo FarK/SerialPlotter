@@ -11,7 +11,7 @@ int main( int argc, char *argv[] )
 
 	//myPlot.show();
 	
-	MultiPlotter mp(1);
+	MultiPlotter mp;
 
 	mp.show();
 

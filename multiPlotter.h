@@ -11,8 +11,12 @@ class MultiPlotter : public QWidget{
 
 	private:
 		char* port;
-		QVarLengthArray<Plotter*,5> plotters;
+		Plotter rollPlot;
+		Plotter pitchPlot;
+		Plotter yawPlot;
 		Serial serial;
+
+		QHBoxLayout* layoutH;
 
 		//Temporal
 		void frameToHex(Frame* t){
@@ -33,7 +37,7 @@ class MultiPlotter : public QWidget{
 		}
 
 	public:
-		MultiPlotter(int numPlotters);
+		MultiPlotter(QWidget *parent = NULL);
 		~MultiPlotter();
 
 	public slots:

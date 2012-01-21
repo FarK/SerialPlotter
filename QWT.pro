@@ -6,11 +6,11 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 CONFIG -= moc
-INCLUDEPATH += /usr/include/qwt /usr/include/qwt5
+INCLUDEPATH += /usr/include/qwt /usr/include/qwt5 /usr/include/boost
 LIBS += -lqwt \
 	-L/usr/lib64 \
 	-lboost_system \
-	-lboost_thread \
+	-lboost_thread-mt \
 	-lboost_date_time
 
 # Input

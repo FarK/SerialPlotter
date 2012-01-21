@@ -11,7 +11,7 @@
 #include <cstdio>
 
 Plotter::Plotter(QWidget *parent) : QWidget(parent),
-				  t0(0), time(0), zoom(0)
+				  t0(0), dataCount(0), zoom(0)
 {
 	//Inicializamos
 	plot = new QwtPlot(this);
@@ -41,7 +41,7 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent),
 	connect(sliderText, SIGNAL(editingFinished()),this, SLOT(setZoom()));
 
 	//Timmer
-	idTimmer = startTimer(100);
+	//idTimmer = startTimer(100);
 
 	//Propieties
 	plot->setTitle( "This is an Example" );
@@ -63,6 +63,8 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent),
 	plot->replot();
 }
 
+
+	/*
 void Plotter::timerEvent(QTimerEvent *event){
 	int timeWindow = (int)(time/100.0*zoom+0.5);
 	x.insert(time,time);
@@ -79,6 +81,27 @@ void Plotter::timerEvent(QTimerEvent *event){
 	curve->itemChanged();
 	plot->replot();
 	++time;
+	newData(dataCount, sin((double)dataCount/6.2832));
+}
+	*/
+
+
+void Plotter::newData(int time, float data){
+	int dataInWindow = (int)(dataCount/100.0*zoom+0.5);
+	x.append(time);
+	y.append(data);
+	curve->setRawData(&x.data()[t0], &y.data()[t0], dataInWindow + 1);
+	//printf("Recibido %i: (%d,%f)\n", dataCount, time, data);
+
+	//Actualizamos el Scroll solo sí no está al máximo
+	if(scroll->sliderPosition() != scroll->maximum()){
+		scroll->setRange(0, dataCount - dataInWindow);
+		scroll->setPageStep(dataInWindow);
+	}
+
+	curve->itemChanged();
+	plot->replot();
+	++dataCount;
 }
 
 void Plotter::setT0(int t){
@@ -89,11 +112,11 @@ void Plotter::setZoom(int z){
 	zoom = z;
 	sliderText->setText(QString::number(zoom));
 	
-	//Actualizamos el Scroll solo si no se actualiza en el timer
+	//Actualizamos el Scroll solo si no se ha actualizado ya
 	if(scroll->sliderPosition() == scroll->maximum()){
-		int timeWindow = (int)(time/100.0*zoom+0.5);
+		int timeWindow = (int)(dataCount/100.0*zoom+0.5);
 		scroll->setRange(0, timeWindow);
-		scroll->setPageStep((int)(time/100.0*zoom+0.5));
+		scroll->setPageStep((int)(dataCount/100.0*zoom+0.5));
 	}
 }
 
