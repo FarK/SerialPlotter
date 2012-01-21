@@ -7,14 +7,15 @@
 #include "plotter.h"
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
+#include <qwt_text.h>
 #include <cmath>
 #include <cstdio>
 
-Plotter::Plotter(QWidget *parent) : QWidget(parent),
+Plotter::Plotter(QwtText title, QWidget *parent) : QWidget(parent),
 				  t0(0), dataCount(0), zoom(0)
 {
 	//Inicializamos
-	plot = new QwtPlot(this);
+	plot = new QwtPlot(title, this);
 	curve = new QwtPlotCurve;
 	scroll = new QScrollBar(Qt::Horizontal,this);
 	slider = new QSlider(Qt::Vertical,this);
@@ -44,7 +45,6 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent),
 	//idTimmer = startTimer(100);
 
 	//Propieties
-	plot->setTitle( "This is an Example" );
 	slider->setRange(1,100);
 	slider->setSingleStep(1);
 	slider->setSliderPosition(100);
@@ -52,6 +52,8 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent),
 
 	scroll->setRange(0,0);
 	scroll->setSingleStep(1);
+
+	plot->setAxisScale(QwtPlot::yLeft, -PI, PI, 0);
 
 	// Show a legend at the bottom
 
@@ -63,38 +65,22 @@ Plotter::Plotter(QWidget *parent) : QWidget(parent),
 	plot->replot();
 }
 
-
-	/*
-void Plotter::timerEvent(QTimerEvent *event){
-	int timeWindow = (int)(time/100.0*zoom+0.5);
-	x.insert(time,time);
-	y.insert(time,sin((double)time/6.2832));
-	curve->setRawData(&x.data()[t0], &y.data()[t0], timeWindow + 1);
-	//printf("plot %i: (%f,%f)\n",time,x[time],y[time]);
-
-	//Actualizamos el Scroll solo sí no está al máximo
-	if(scroll->sliderPosition() != scroll->maximum()){
-		scroll->setRange(0, time - timeWindow);
-		scroll->setPageStep(timeWindow);
-	}
-
-	curve->itemChanged();
-	plot->replot();
-	++time;
-	newData(dataCount, sin((double)dataCount/6.2832));
-}
-	*/
-
-
 void Plotter::newData(int time, float data){
 	int dataInWindow = (int)(dataCount/100.0*zoom+0.5);
 	x.append(time);
 	y.append(data);
 	curve->setRawData(&x.data()[t0], &y.data()[t0], dataInWindow + 1);
 	//printf("Recibido %i: (%d,%f)\n", dataCount, time, data);
+	//printf("Rango visible (%d%%): (%d,%d)\tRango total: (0, %d)\n", zoom, t0, dataCount - dataInWindow, dataCount);
 
-	//Actualizamos el Scroll solo sí no está al máximo
-	if(scroll->sliderPosition() != scroll->maximum()){
+	//Nos aseguramos de que la barra de scroll quede fija en el final al
+	//actualizar su rango
+	if(scroll->sliderPosition() == scroll->maximum()){
+		scroll->setRange(0, dataCount - dataInWindow);
+		scroll->setPageStep(dataInWindow);
+		scroll->setSliderPosition(scroll->maximum());
+	}
+	else{
 		scroll->setRange(0, dataCount - dataInWindow);
 		scroll->setPageStep(dataInWindow);
 	}
@@ -111,13 +97,6 @@ void Plotter::setT0(int t){
 void Plotter::setZoom(int z){
 	zoom = z;
 	sliderText->setText(QString::number(zoom));
-	
-	//Actualizamos el Scroll solo si no se ha actualizado ya
-	if(scroll->sliderPosition() == scroll->maximum()){
-		int timeWindow = (int)(dataCount/100.0*zoom+0.5);
-		scroll->setRange(0, timeWindow);
-		scroll->setPageStep((int)(dataCount/100.0*zoom+0.5));
-	}
 }
 
 void Plotter::setZoom(){

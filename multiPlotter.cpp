@@ -1,14 +1,15 @@
 #include "multiPlotter.h"
 #include <QVarLengthArray>
 #include <QHBoxLayout>
+#include <qwt_text.h>
 #include <cstdio>
 #include "serial.h"
 
 MultiPlotter::MultiPlotter(QWidget *parent) :
 	QWidget(parent),
-	rollPlot(this),
-	pitchPlot(this),
-	yawPlot(this),
+	rollPlot(QwtText("Roll"),this),
+	pitchPlot(QwtText("Pitch"),this),
+	yawPlot(QwtText("Yaw"),this),
 	serial("/dev/ttyUSB0", 9600)
 {
 	//Layout

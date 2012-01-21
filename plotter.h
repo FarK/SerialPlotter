@@ -11,7 +11,10 @@
 #include <QLineEdit>
 #include <qwt_plot_curve.h>
 #include <qwt_plot.h>
+#include <qwt_text.h>
 #include "serial.h"
+
+const double PI = 3.1415926536;
 
 class Plotter : public QWidget
 {
@@ -33,7 +36,7 @@ class Plotter : public QWidget
 		int idTimmer;
 
 	public:
-		Plotter(QWidget *parent = NULL);
+		Plotter(QwtText title, QWidget *parent = NULL);
 		void newData(int time, float data);
 		//void timerEvent(QTimerEvent *event);
 
