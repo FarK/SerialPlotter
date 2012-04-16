@@ -11,8 +11,9 @@
 #include <cmath>
 #include <cstdio>
 
-Plotter::Plotter(QwtText title, QWidget *parent) : QWidget(parent),
-				  t0(0), dataCount(0), zoom(0)
+Plotter::Plotter(QwtText title, QWidget *parent, double minScale, double maxScale) :
+	QWidget(parent),
+	t0(0), dataCount(0), zoom(0)
 {
 	//Inicializamos
 	plot = new QwtPlot(title, this);
@@ -53,7 +54,7 @@ Plotter::Plotter(QwtText title, QWidget *parent) : QWidget(parent),
 	scroll->setRange(0,0);
 	scroll->setSingleStep(1);
 
-	plot->setAxisScale(QwtPlot::yLeft, -PI, PI, 0);
+	plot->setAxisScale(QwtPlot::yLeft, minScale, maxScale, 0);
 
 	// Show a legend at the bottom
 
