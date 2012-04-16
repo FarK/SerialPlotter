@@ -4,24 +4,11 @@
 #include <iostream>
 #include <QThread>
 #include <boost/asio.hpp>
+#include "frame.h"
 
 //Carácteres especiales de la trama (inicio de trama y carácter de escape)
 const unsigned char STX = 0x63;
 const unsigned char DLE = 0x64;	
-
-//Esta es la trama que se recibirá
-//La union con un array permite tratarla
-//fácilmente como un buffer sin necesidad
-//de hacer casting
-typedef union{
-	struct{
-		int time;
-		float roll;
-		float pitch;
-		float yaw;
-	};
-	unsigned char buff[16];
-} Frame;
 
 //Serial es la clase que gestionará la comunicación serie
 class Serial : public QThread{

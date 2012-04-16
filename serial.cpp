@@ -1,4 +1,5 @@
 #include "serial.h"
+#include "frame.h"
 #include <boost/asio.hpp>
 #include <QObject>
 
